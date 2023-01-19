@@ -1,0 +1,1 @@
+NotesLab is a notes app built with Node.js, Express and MySQL to create a CRUD system.
