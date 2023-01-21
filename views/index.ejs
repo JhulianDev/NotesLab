@@ -27,21 +27,16 @@
   <!-- Header -->
   <header class="header">
     <div class="header__box">
-      <a href="#" class="header__logo-link">
+      <a href="/index" class="header__logo-link">
         <img src="/img/logotipo.png" alt="Logo NotesLab" class="header__logo">
       </a>
       <div class="header__box-login-user">
-        <a href="/login" class="header__log-in">Log in</a>
-        <a href="/sign-up" class="header__sign-in">Sign up</a>
+        <h1 class="header__user-name"><%= user ? user.user : "" %></h1>
+        <a type="button" href="logout"><img src="/img/logout-icon.png" alt="Log out icon" class="header__logout-icon"></a>
         <img src="/img/avatar-user.png" alt="Avatar User" class="header__avatar-user">
       </div>
     </div>
   </header>
-
-  <h1>Pagina de inicio</h1>
-
-
-  <!-- SwetAlert CDN -->
 
 </body>
 

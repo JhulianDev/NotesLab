@@ -5,8 +5,9 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 
 // Routers para las vistas
-router.get("/", (req, res) => {
-    res.render("index");
+router.get("/", authController.userAuthenticated, (req, res) => {
+    let user = req.user || {};
+    res.render("index", {user: req.user});
 });
 
 router.get("/login", (req, res) => {
@@ -24,6 +25,9 @@ router.post("/sign-up", authController.register);
 
 // Controlador de Login
 router.post("/login", authController.login);
+
+// Controlador para el Logout
+router.get("/logout", authController.logout);
 
 
 

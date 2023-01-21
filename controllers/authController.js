@@ -1,13 +1,13 @@
 // Importamos JSON Web Token, bcryptjs y promisefy
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
-const promisify = require("util");
+const util = require("util");
 
 // Llamamos al modulo de conexion de la base de datos
 const connection = require("../database/db");
 
 
-// Creamos sistema de registro de usuario
+// Creamos sistema de Registro de usuario
 exports.register = async (req, res) => {
     try {
         const user = req.body.user;
@@ -19,13 +19,28 @@ exports.register = async (req, res) => {
             res.render("sign-up", {
                 alert: true,
                 alertTitle: "Attention",
-                alertText: "¡All fields must be completed!",
-                alertIcon: "error",
+                alertText: "All fields must be completed",
+                alertIcon: "info",
                 alertShowConfirmButton: true,
                 alertTimer: false,
                 alertRuta: "sign-up"
             })
         } else {
+            const emailRegex = /^(([^<>()\[\]\\.,:\s@"]+(\.[^<>()\[\]\\.,:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+            if (!emailRegex.test(email)) {
+                res.render("sign-up", {
+                    alert: true,
+                    alertTitle: "Attention",
+                    alertText: "Invalid email format",
+                    alertIcon: "error",
+                    alertShowConfirmButton: true,
+                    alertTimer: false,
+                    alertRuta: "sign-up"
+                });
+                return;
+            }
+
             connection.query("INSERT INTO users SET ?", { user: user, email: email, pass: passHash }, (error, results) => {
                 if (error) {
                     console.log(error);
@@ -102,20 +117,30 @@ exports.login = async (req, res) => {
     }
 };
 
-// Creamos sistema de autenticacion del usuario
+// Creamos sistema de Autenticacion del usuario
 exports.userAuthenticated = async (req, res, next) => {
     if (req.cookies.jwt) {
         try {
-            const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
+            const decoded = await util.promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
             connection.query("SELECT * FROM users WHERE id = ?", [decoded.id], (error, results) => {
-                if(!results){return next()}
-                req.user = results[0]
-                return next()
+                if (!results) {
+                    return next()
+                } else {
+                    req.user = results[0]
+                    return next()
+                }
             })
         } catch (error) {
             console.log(error);
+            return next()
         }
     } else {
         res.redirect("/login")
     }
+};
+
+// Creamos sistema Logout del usuario
+exports.logout = async (req, res) => {
+    res.clearCookie("jwt");
+    return res.redirect("/");
 };
