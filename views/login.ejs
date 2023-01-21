@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="/img/isotipo.ico" type="image/x-icon">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+
+  <!-- Title -->
+  <title>NotesLab - Sign up</title>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__box">
+      <a href="#" class="header__logo-link">
+        <img src="/img/logotipo.png" alt="Logo NotesLab" class="header__logo">
+      </a>
+      <div class="header__box-login-user">
+        <a href="/login" class="header__log-in">Log in</a>
+        <a href="/sign-up" class="header__sign-in">Sign up</a>
+        <img src="/img/avatar-user.png" alt="Avatar User" class="header__avatar-user">
+      </div>
+    </div>
+  </header>
+
+  <!-- Form Log in -->
+  <div class="container-section-form">
+    <form action="login" id="form" method="POST" class="form">
+      <img src="/img/isotipo.png" alt="isotipo"  class="form__img">
+
+      <div class="form__box-input">
+        <img src="/img/user-icon.png" alt="User icon" class="form__icons">
+        <input type="text" name="user" id="user" placeholder="User name" class="form__input">
+      </div>
+
+      <div class="form__box-input">
+        <img src="/img/password-icon.png" alt="Password icon" class="form__icons">
+        <input type="password" name="pass" id="pass" placeholder="Password" class="form__input">
+      </div>
+      <button type="submit" id="log-in" value="Log in" class="form__button">Log in</button>
+      <a href="/sign-up" class="form__button form__button--color--margin">Sign up</a>
+    </form>
+  </div>
+
+  <!-- SweetAlert CDN -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- SweetAlert Cuerpo -->
+  <% if(alert) { %>
+    <script>
+      Swal.fire({
+        title: "<%= alertTitle %>",
+        text: "<%= alertText %>",
+        icon: "<%= alertIcon %>",
+        showConfirmButton: <%= alertShowConfirmButton %>,
+        timer: <%= alertTimer %>
+      }) .then(() => {
+        window.location = "/<%= alertRuta %>"
+      })
+    </script>
+  <% } %>
+
+</body>
+
+</html>
