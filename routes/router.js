@@ -7,7 +7,7 @@ const authController = require("../controllers/authController");
 // Routers para las vistas
 router.get("/", authController.userAuthenticated, (req, res) => {
     let user = req.user || {};
-    res.render("index", {user: req.user});
+    res.render("dashboard", {user: req.user});
 });
 
 router.get("/login", (req, res) => {

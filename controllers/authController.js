@@ -105,6 +105,7 @@ exports.login = async (req, res) => {
                         alertTitle: "Success",
                         alertText: "¡Welcome to NotesLab!",
                         alertIcon: "success",
+                        alertIconColor: "#233DC1",
                         alertShowConfirmButton: false,
                         alertTimer: 1500,
                         alertRuta: ""
