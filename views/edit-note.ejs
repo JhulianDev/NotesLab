@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="/img/isotipo-blue.ico" type="image/x-icon">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=swap"
+    rel="stylesheet">
+
+  <!-- Title -->
+  <title>NotesLab</title>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__box">
+      <a href="/" class="header__logo-link">
+        <img src="/img/logo-blue.png" alt="Logo NotesLab" class="header__logo">
+      </a>
+      <div class="header__box-login-user">
+        <h1 class="header__user-name">
+          <%= user ? user.user : "" %>
+        </h1>
+        <a type="button" href="logout"><img src="/img/logout-icon.png" alt="Log out icon"
+            class="header__logout-icon"></a>
+        <img src="/img/avatar-blue.png" alt="Avatar User" class="header__avatar-user">
+      </div>
+    </div>
+  </header>
+
+  <!-- Create Note -->
+  <div class="container-section-create">
+    <form action="/updateNote" method="post" class="create__form">
+      <input id="id" name="id" value="<%= note.id %>" hidden>
+      <input id="user_id" name="user_id" value="<%= user.id %>" hidden>
+      <input id="color" name="color" value="blue" hidden>
+      <input id="column_id" name="column_id" value="<%= note.column_id %>" hidden>
+      <div class="create__header note__header--<%= note.color %>">
+        <div class="create__box-icons">
+          <img class="create__img" src="/img/image-icon.png" alt="Image icon">
+          <div class="create__box-colors">
+            <span class="create__color-main note__header--<%= note.color %>"></span>
+            <span class="create__color note__header--light-blue"></span>
+            <span class="create__color note__header--purple"></span>
+            <span class="create__color note__header--red"></span>
+            <span class="create__color note__header--blue"></span>
+          </div>
+        </div>
+        <input type="text" class="create__title" name="title" placeholder="Tile note" value="<%= note.title %>">
+        <div class="create__box-icons">
+          <input type="image" src="/img/save-icon.png" alt="Edit icon" class="create__icon">
+          <a href="/"><img src="/img/delete-icon.png" alt="Delete icon" class="create__icon"></a>
+        </div>
+      </div>
+      <div class="create__box-content">
+        <textarea class="create__content" name="content"
+          placeholder="Description of the note..." spellcheck="false"><%= note.content %></textarea>
+      </div>
+    </form>
+  </div>
+
+
+
+  <script src="/js/changeColorNote.js"></script>
+</body>
+
+</html>

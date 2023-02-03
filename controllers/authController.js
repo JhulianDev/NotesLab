@@ -75,6 +75,7 @@ exports.login = async (req, res) => {
                 alertTitle: "Attention",
                 alertText: "The User and Password fields cannot be empty.",
                 alertIcon: "info",
+                alertIconColor: "",
                 alertShowConfirmButton: true,
                 alertTimer: false,
                 alertRuta: "login"
@@ -87,6 +88,7 @@ exports.login = async (req, res) => {
                         alertTitle: "Error",
                         alertText: "The username or password is incorrect",
                         alertIcon: "error",
+                        alertIconColor: "",
                         alertShowConfirmButton: true,
                         alertTimer: false,
                         alertRuta: "login"
@@ -128,9 +130,19 @@ exports.userAuthenticated = async (req, res, next) => {
                     return next()
                 } else {
                     req.user = results[0]
-                    return next()
+                    // console.log(req.user)
+
+                    connection.query("SELECT *, column_id FROM notes WHERE user_id = ?", [req.user.id], (error, results) => {
+                        if (!results) {
+                            notes = null;
+                            return next()
+                        } else {
+                            req.user.notes = results
+                        }
+                        return next();
+                    });
                 }
-            })
+            });
         } catch (error) {
             console.log(error);
             return next()

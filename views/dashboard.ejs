@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="/img/isotipo.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/img/isotipo-blue.ico" type="image/x-icon">
 
   <!-- Styles -->
   <link rel="stylesheet" href="/css/normalize.css">
@@ -28,13 +28,20 @@
   <!-- Header -->
   <header class="header">
     <div class="header__box">
-      <a href="/dashboard" class="header__logo-link">
-        <img src="/img/logotipo.png" alt="Logo NotesLab" class="header__logo">
+      <a href="/" class="header__logo-link">
+        <img src="/img/logo-blue.png" alt="Logo NotesLab" class="header__logo">
       </a>
       <div class="header__box-login-user">
-        <h1 class="header__user-name"><%= user ? user.user : "" %></h1>
-        <a type="button" href="logout"><img src="/img/logout-icon.png" alt="Log out icon" class="header__logout-icon"></a>
-        <img src="/img/avatar-user.png" alt="Avatar User" class="header__avatar-user">
+        <span class="header__theme header__theme--blue"></span>
+        <span class="header__theme header__theme--pink"></span>
+        <span class="header__theme-main"></span>
+        <h1 class="header__user-name">
+          <%= user ? user.user : "" %>
+        </h1>
+        <input id="userId" name="user_id" value="<%= user.id %>" hidden>
+        <a type="button" href="logout"><img src="/img/logout-icon.png" alt="Log out icon"
+            class="header__logout-icon"></a>
+        <img src="/img/avatar-blue.png" alt="Avatar User" class="header__avatar-user">
       </div>
     </div>
   </header>
@@ -44,75 +51,48 @@
   <div class="dashboard__blur blur-right"></div>
   <div class="dashboard">
 
-    <div class="dashboard__column-notes">
-      <div class="dashboard__box-scroll-notes">
 
-        <div class="dashboard__note">
-          <div class="note__header">
-            <h1 class="note__title">Pasos para armar web</h1>
-            <div class="note__box-icons">
-              <a href="#"><img src="/img/edit-icon.png" alt="Edit icon" class="note__icon"></a>
-              <a href="#"><img src="/img/delete-icon.png" alt="Delete icon" class="note__icon"></a>
+    <% for (let columnId of columns) { %>
+      <div class="dashboard__column-notes">
+        <div class="dashboard__box-scroll-notes">
+          <% for (let note of columnNotes[columnId]) { %>
+            <div class="dashboard__note">
+              <div class="note__header note__header--<%= note.color %>">
+                <h1 class="note__title">
+                  <%= note.title %>
+                </h1>
+                <div class="note__box-icons">
+                  <a href="/edit-note/<%= note.id %>"><img src="/img/edit-icon.png" alt="Edit icon"
+                      class="note__icon"></a>
+                  <a href="/delete-note/<%= note.id %>"><img src="/img/delete-icon.png" alt="Delete icon"
+                      class="note__icon"></a>
+                </div>
+              </div>
+              <div class="note__contents">
+                <p class="note__p">
+                  <%= note.content %>
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="note__contents">
-            <p class="note__p">Realizar lista de tareas correspondientes a la estructura a seguir en el proyecto de
-              implementacion de la pagina web de aismaba y Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Voluptatibus autem at quam ad! Quod itaque totam illo nostrum repellat consequatur beatae rem deserunt
-              quisquam nihil! Dolores fugit iure suscipit dignissimos.</p>
-          </div>
+            <% } %>
         </div>
-
-        <div class="dashboard__note">
-          <div class="note__header">
-            <h1 class="note__title">Pasos para armar web</h1>
-            <div class="note__box-icons">
-              <a href="#"><img src="/img/edit-icon.png" alt="Edit icon" class="note__icon"></a>
-              <a href="#"><img src="/img/delete-icon.png" alt="Delete icon" class="note__icon"></a>
-            </div>
-          </div>
-          <div class="note__contents">
-            <p class="note__p">Realizar lista de tareas correspondientes a la estructura a seguir en el proyecto de
-              implementacion de la pagina web de aismaba y Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Voluptatibus autem at quam ad! Quod itaque totam illo nostrum repellat consequatur beatae rem deserunt
-              quisquam nihil! Dolores fugit iure suscipit dignissimos.</p>
-          </div>
-        </div>
-
-        <div class="dashboard__note">
-          <div class="note__header">
-            <h1 class="note__title">Pasos para armar web</h1>
-            <div class="note__box-icons">
-              <a href="#"><img src="/img/edit-icon.png" alt="Edit icon" class="note__icon"></a>
-              <a href="#"><img src="/img/delete-icon.png" alt="Delete icon" class="note__icon"></a>
-            </div>
-          </div>
-          <div class="note__contents">
-            <p class="note__p">Realizar lista de tareas correspondientes a la estructura a seguir en el proyecto de
-              implementacion de la pagina web de aismaba y Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Voluptatibus autem at quam ad! Quod itaque totam illo nostrum repellat consequatur beatae rem deserunt
-              quisquam nihil! Dolores fugit iure suscipit dignissimos.</p>
-          </div>
-        </div>
-
+        <a class="dashboard__add-note" href="/create-note?column_id=<%= columnId %>">
+          <img src="/img/add-icon.png" alt="Add note icon" class="dashboard__add-icon">
+          <h2 class="dashboard__add-text">New note</h2>
+        </a>
       </div>
+      <% } %>
 
-      <a class="dashboard__add-note" href="#">
-        <img src="/img/add-icon.png" alt="Add note icon" class="dashboard__add-icon">
-        <h2 class="dashboard__add-text">New note</h2>
-      </a>
-    </div>
-
-    <a class="dashboard__add-column" href="#">
-      <img src="/img/add-icon.png" alt="Add note icon" class="dashboard__add-icon">
-      <h2 class="dashboard__add-text">New column</h2>
-    </a>
-
-  </div>
+        <a class="dashboard__add-column" href="/create-column">
+          <img src="/img/add-icon.png" alt="Add note icon" class="dashboard__add-icon">
+          <h2 class="dashboard__add-text">New note</h2>
+        </a>
 
 
 
 
+
+  <script src="/js/changeTheme.js"></script>
 </body>
 
 </html>
