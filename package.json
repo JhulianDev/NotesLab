@@ -4,8 +4,8 @@
   "description": "NotesLab is a notes app built with Node.js, Express and MySQL to create a CRUD system.",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
